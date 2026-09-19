@@ -1,0 +1,3 @@
+%% General undergraduate profile: no college-specific overrides.
+\ProvidesFile{general.def}[2026/09/20 School-wide defaults]
+\endinput

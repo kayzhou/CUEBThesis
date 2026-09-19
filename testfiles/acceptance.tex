@@ -1,0 +1,22 @@
+\documentclass{cuebthesis}
+\cuebsetup{title={模板验收},title*={Acceptance},author={测试作者},student-id={0000000000},department={测试学院},major={测试专业},supervisor={测试导师},font-profile=preview}
+\addbibresource{testfiles/refs.bib}
+\begin{document}
+\cuebfrontmatter
+\typeout{CUEB-BASELINE=\the\baselineskip}
+\section{第一节}
+首次引用中文文献\cuebcite[23--25]{zhou}，再引英文文献\cuebcite{bishop}。
+\begin{equation} a=b \label{eq:first}\end{equation}
+\begin{figure}[ht]\centering\fbox{First figure}\caption{首幅图}\label{fig:first}\end{figure}
+\clearpage
+\section{第二节}
+重复引用中文文献\cuebcite[26]{zhou}，说明性注释\footnote{这是第四条脚注。}，引用另一作者\cuebcite{li}。
+网络文献\cuebcite{web}。期刊文献\cuebcite{wang}。多篇文献同注\cuebcite{zhou,bishop}。
+\begin{equation} c=d \label{eq:second}\end{equation}
+\begin{figure}[ht]\centering\fbox{Second figure}\caption{次幅图}\label{fig:second}\end{figure}
+\typeout{CUEB-FOOTNOTES=\arabic{footnote}}
+\cuebprintbibliography
+\cuebappendix
+\section{验收附件}
+\begin{equation}e=f\label{eq:appendix}\end{equation}
+\end{document}

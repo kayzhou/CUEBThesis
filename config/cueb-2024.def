@@ -1,0 +1,33 @@
+%% School-wide profile transcribed from the supplied 2024 undergraduate handbook.
+%% Binding offset, 18bp leading, page-number origin and heading spacing are
+%% documented interpretations: see docs/requirements.md.
+\ProvidesFile{cueb-2024.def}[2026/09/20 CUEB 2024 undergraduate handbook]
+\geometry{a4paper,left=3.8cm,right=2.8cm,top=2.54cm,bottom=2.54cm,
+ headheight=0.9cm,headsep=0.14cm,footskip=0.79cm}
+\linespread{1}
+\setlength\parindent{2em}
+\setlength\parskip{0pt}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\ctexset{
+ section={afterindent=true,format=\cuebheadingfont,number=\arabic{section},name={},aftername=\hspace{1em},beforeskip=18bp,afterskip=9bp},
+ subsection={afterindent=true,format=\heiti\fontsize{12bp}{18bp}\selectfont,aftername=\hspace{1em},beforeskip=12bp,afterskip=6bp},
+ subsubsection={afterindent=true,format=\songti\fontsize{12bp}{18bp}\selectfont,aftername=\hspace{1em},beforeskip=9bp,afterskip=6bp}
+}
+\DeclareCaptionFont{cueb}{\songti\fontsize{10.5bp}{15bp}\selectfont}
+\DeclareCaptionLabelSeparator{cueb}{\hspace{2em}}
+\captionsetup{font=cueb,labelfont=normalfont,labelsep=cueb,justification=centering,singlelinecheck=false}
+\captionsetup[figure]{position=bottom}
+\captionsetup*[table]{position=top}
+\fancypagestyle{cueb}{
+ \fancyhf{}
+ \fancyheadoffset[L]{1cm}
+ \fancyhead[C]{\smash{\raisebox{-\dp\strutbox}{\cuebheaderlogo}}}
+ \fancyfoot[R]{\fontsize{10.5bp}{12bp}\selectfont\thepage}
+ \renewcommand\headrulewidth{0pt}
+ \renewcommand\footrulewidth{0pt}
+}
+\pagestyle{cueb}
+\renewcommand\bibfont{\cuebbodyfont}
+\setlength\bibitemsep{0pt}
+\endinput

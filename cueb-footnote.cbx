@@ -1,0 +1,40 @@
+%% Copyright (C) 2026 CUEB undergraduate thesis template contributors.
+%% LPPL 1.3c or later. Full notes follow the 2024 CUEB handbook examples.
+\ProvidesFile{cueb-footnote.cbx}[2026/09/20 v0.1.0 CUEB footnote citations]
+\RequireCitationStyle{verbose}
+\DeclareFieldFormat{cuebplain}{#1}
+\DeclareFieldFormat{postnote}{#1}
+\newbibmacro*{cueb:author}{%
+ \ifnameundef{author}{\printnames{editor}}{\printnames{author}}%
+ \setunit{\addperiod\space}}
+\newbibmacro*{cueb:simple-note}{%
+ \usebibmacro{cueb:author}%
+ \printfield[cuebplain]{title}\setunit{\addperiod\space}%
+ \ifentrytype{article}{%
+  \printfield[cuebplain]{journaltitle}\setunit{\addcomma\space}%
+  \printfield{year}%
+  \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%
+  \iffieldundef{postnote}{\setunit{\addcolon\space}\printfield{pages}}{}%
+ }{\ifentrytype{book}{%
+  \ifnameundef{translator}{}{\printnames{translator}\printtext{，译}\setunit{\addperiod\space}}%
+  \printlist{location}\setunit{\addcolon\space}\printlist{publisher}%
+  \setunit{\addcomma\space}\printfield{year}%
+ }{\ifentrytype{online}{%
+  \printfield{url}\setunit{\addperiod\space}\printfield{year}%
+  \iffieldundef{month}{}{\printtext{-\mkmonthzeros{\thefield{month}}}}%
+  \iffieldundef{day}{}{\printtext{-\mkdayzeros{\thefield{day}}}}%
+ }{%
+  \printfield[cuebplain]{booktitle}\setunit{\addperiod\space}%
+  \printlist{publisher}\setunit{\addcomma\space}\printfield{year}%
+  \iffieldundef{postnote}{\setunit{\addcolon\space}\printfield{pages}}{}%
+ }}}}
+\newbibmacro*{cueb:note}{%
+ \ifboolexpr{test {\ifentrytype{article}} or test {\ifentrytype{book}} or test {\ifentrytype{online}} or test {\ifentrytype{inproceedings}}}
+  {\usebibmacro{cueb:simple-note}}
+  {\usedriver{}{\thefield{entrytype}}}}
+\DeclareCiteCommand{\cuebcite}[\mkbibfootnote]
+ {\usebibmacro{prenote}}
+ {\usebibmacro{citeindex}\usebibmacro{cueb:note}}
+ {\addsemicolon\space}
+ {\iffieldundef{postnote}{}{\setunit{\addcolon\space}\printfield{postnote}}\addperiod}
+\endinput

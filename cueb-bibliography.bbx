@@ -1,0 +1,19 @@
+%% Copyright (C) 2026 CUEB undergraduate thesis template contributors.
+%% LPPL 1.3c or later. Depends on the installed biblatex-gb7714-2015 package.
+\ProvidesFile{cueb-bibliography.bbx}[2026/09/20 v0.1.0 CUEB bibliography]
+\RequireBibliographyStyle{gb7714-2005}
+\ExecuteBibliographyOptions{doi=false,url=true,isbn=false,gbpub=false,gbalign=left}
+\DeclareSortingTemplate{cueb}{
+ \sort{\field{presort}}
+ \sort{\field{sortkey}\field{sortname}\field{author}\field{editor}\field{title}}
+ \sort{\field{year}}
+ \sort{\field{title}}
+}
+\DeclareSourcemap{
+ \maps[datatype=bibtex]{
+  \map[overwrite]{\step[fieldset=presort,fieldvalue={z}]}
+  \map[overwrite]{\step[fieldsource=langid,match=\regexp{^chinese$},final]
+   \step[fieldset=presort,fieldvalue={a}]}
+ }
+}
+\endinput
