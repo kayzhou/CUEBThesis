@@ -1,0 +1,33 @@
+% 从项目根目录运行：latexmk -outdir=build/minimal examples/minimal.tex
+\documentclass{cuebthesis}
+\cuebsetup{
+  standard=cueb-2024,
+  college-profile=general,
+  font-profile=preview,
+  numbering=continuous,
+  thesis-type=research,
+  title={最小排版示例},
+  title*={A Minimal Typesetting Example},
+  author={示例作者},
+  student-id={0000000000},
+  department={示例学院},
+  major={示例专业},
+  supervisor={示例导师},
+  date={2026年9月}
+}
+\addbibresource{ref/refs.bib}
+\begin{document}
+\maketitle
+\cuebfrontmatter
+\cuebmainmatter
+\section{开始写作}
+这个文件用于检查编译环境。它省略了摘要、目录、附录等部分，不是可直接提交的完整论文。本例以真实图书演示文献脚注。\cuebcite{zhou2016}
+
+在项目根目录编译可以正确找到文档类、校名字标和文献库。正式写作请从主示例 \texttt{main.tex} 开始，并替换基本信息、正文和参考文献。
+\subsection{公式示例}
+以下计算采用人工构造的数字：
+\begin{equation}
+  2+4+6=12.
+\end{equation}
+\cuebprintbibliography
+\end{document}

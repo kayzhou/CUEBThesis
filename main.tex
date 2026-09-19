@@ -1,0 +1,21 @@
+% !TeX program = xelatex
+% 在项目根目录运行：latexmk -outdir=build main.tex
+\documentclass{cuebthesis}
+\input{cuebsetup}
+\addbibresource{ref/refs.bib}
+
+\begin{document}
+\maketitle
+\cuebfrontmatter
+\input{data/abstract}
+\tableofcontents
+\cuebmainmatter
+\input{data/01-writing}
+\clearpage
+\input{data/02-validation}
+\cuebprintbibliography
+\cuebappendix
+\input{data/appendix}
+\cuebacknowledgements
+\input{data/acknowledgements}
+\end{document}
