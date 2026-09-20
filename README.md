@@ -1,8 +1,10 @@
-# 首都经济贸易大学本科毕业论文 LaTeX 模板
+# 首都经济贸易大学人工智能学院本科毕业论文（设计）LaTeX 模板
 
-**v0.1.0 预览版 · 2026-09-20 · 社区独立实现，非学校官方模板。**
+**v0.1.1 预览版 · 2026-09-20 · 社区独立实现，非学校官方模板。**
 
-依据用户提供的二〇二四届《本科毕业论文（设计）指导与评审手册》中的撰写要求，提供中文本科论文的排版原型。以 ThuThesis 的配置接口与工程组织为参考，基于 CTeX、XeLaTeX、biblatex 和 Biber 实现；不需要安装 ThuThesis，也不是其完整 Fork。
+当前面向**首都经济贸易大学人工智能学院**使用，保留学院配置扩展。依据用户提供的二〇二四届《本科毕业论文（设计）指导与评审手册》中的撰写要求，提供中文本科论文的排版原型。以 ThuThesis 的配置接口与工程组织为参考，基于 CTeX、XeLaTeX、biblatex 和 Biber 实现；不需要安装 ThuThesis，也不是其完整 Fork。
+
+学院配置目前只预设学院名称，版式沿用所附校级手册；尚未加入未经确认的学院专属格式。
 
 当前自动生成的是**暂拟打印扉页**，不是已经确认的学校统一封面。默认使用可分发的预览字体。正式使用前需核实当届规范、学院补充要求、封面底稿和字体，并核对[规范映射与未决事项](docs/requirements.md)。不宣称已获学校审定或适用于最新届次。
 
@@ -25,7 +27,7 @@ make test       # 自动检查
 make release    # 构建含示例 PDF 的发布包
 ```
 
-最小示例的直接命令为 `latexmk -outdir=build/minimal examples/minimal.tex`。请始终从项目根目录执行。发布包位于 `dist/cueb-undergraduate-thesis-v0.1.0.zip`。v0.1.0 的 `make test` 使用 Python 集成检查；l3build 回归机制留待后续版本。
+最小示例的直接命令为 `latexmk -outdir=build/minimal examples/minimal.tex`。请始终从项目根目录执行。发布包位于 `dist/cueb-undergraduate-thesis-v0.1.1.zip`。v0.1.1 的 `make test` 使用 Python 集成检查；l3build 回归机制留待后续版本。
 
 ## 开始写作
 
@@ -35,14 +37,14 @@ make release    # 构建含示例 PDF 的发布包
 4. 编译后查看最终 PDF，修复未解析引文、缺字、溢出与分页问题。
 5. 提交前使用 `font-profile=submission` 重新编译，并完成规范与逐页核对。
 
-主示例覆盖中英文摘要、三级标题、两节中的公式与图表、跨页表、重复文献引用、说明性脚注、参考文献、附录和致谢。所有身份信息均为占位内容，数值均为人工构造。它是缩短的排版教学示例，**不是满足8000～10000字要求的完整论文**；示例中的五条参考文献也不满足正式论文的数量要求。
+主示例覆盖中英文摘要、三级标题、两节中的公式与图表、跨页表、重复文献引用、说明性脚注、参考文献、附录和致谢。除实际使用学院名称外，学生、导师等身份信息均为占位内容，数值均为人工构造。它是缩短的排版教学示例，**不是满足8000～10000字要求的完整论文**；示例中的五条参考文献也不满足正式论文的数量要求。
 
 ## 常用配置
 
 | 配置 | 可选值与用途 |
 | --- | --- |
 | `standard` | `cueb-2024`：所附2024届手册 |
-| `college-profile` | `general`：通用配置；学院名称字段不会自动选择格式 |
+| `college-profile` | `artificial-intelligence`：默认人工智能学院；`general`：通用配置，需自行填写学院名称 |
 | `font-profile` | `preview`：Fandol / TeX Gyre；`submission`：SimSun / SimHei / Times New Roman |
 | `numbering` | `continuous`：全文连续，默认；`section`：按一级标题编号 |
 | `thesis-type` | `research`：研究论文；`review`：文献综述；`design`：毕业设计 |

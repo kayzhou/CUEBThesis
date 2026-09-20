@@ -1,6 +1,12 @@
 %% Copyright (C) 2026 CUEB undergraduate thesis template contributors.
 %% LPPL 1.3c or later. Depends on the installed biblatex-gb7714-2015 package.
-\ProvidesFile{cueb-bibliography.bbx}[2026/09/20 v0.1.0 CUEB bibliography]
+\ProvidesFile{cueb-bibliography.bbx}[2026/09/20 v0.1.1 CUEB bibliography]
+% Normalize explicit language before the upstream style infers it from titles.
+\DeclareSourcemap{
+ \maps[datatype=bibtex]{
+  \map[overwrite]{\step[fieldsource=langid,final]\step[fieldset=language,origfieldval]}
+ }
+}
 \RequireBibliographyStyle{gb7714-2005}
 \ExecuteBibliographyOptions{doi=false,url=true,isbn=false,gbpub=false,gbalign=left}
 \DeclareSortingTemplate{cueb}{
@@ -12,7 +18,7 @@
 \DeclareSourcemap{
  \maps[datatype=bibtex]{
   \map[overwrite]{\step[fieldset=presort,fieldvalue={z}]}
-  \map[overwrite]{\step[fieldsource=langid,match=\regexp{^chinese$},final]
+  \map[overwrite]{\step[fieldsource=languageid,match=\regexp{^chinese$},final]
    \step[fieldset=presort,fieldvalue={a}]}
  }
 }

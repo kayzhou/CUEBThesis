@@ -1,6 +1,6 @@
 %% Copyright (C) 2026 CUEB undergraduate thesis template contributors.
 %% LPPL 1.3c or later. Full notes follow the 2024 CUEB handbook examples.
-\ProvidesFile{cueb-footnote.cbx}[2026/09/20 v0.1.0 CUEB footnote citations]
+\ProvidesFile{cueb-footnote.cbx}[2026/09/20 v0.1.1 CUEB footnote citations]
 \RequireCitationStyle{verbose}
 \DeclareFieldFormat{cuebplain}{#1}
 \DeclareFieldFormat{postnote}{#1}
@@ -13,11 +13,14 @@
  \ifentrytype{article}{%
   \printfield[cuebplain]{journaltitle}\setunit{\addcomma\space}%
   \printfield{year}%
+  \iffieldundef{volume}{}{\setunit{\addcomma\space}\printfield{volume}}%
   \iffieldundef{number}{}{\printtext{\mkbibparens{\printfield{number}}}}%
   \iffieldundef{postnote}{\setunit{\addcolon\space}\printfield{pages}}{}%
  }{\ifentrytype{book}{%
   \ifnameundef{translator}{}{\printnames{translator}\printtext{，译}\setunit{\addperiod\space}}%
-  \printlist{location}\setunit{\addcolon\space}\printlist{publisher}%
+  \printfield{edition}\setunit{\addperiod\space}%
+  \iflistundef{location}{}{\printlist{location}\setunit{\addcolon\space}}%
+  \printlist{publisher}%
   \setunit{\addcomma\space}\printfield{year}%
  }{\ifentrytype{online}{%
   \printfield{url}\setunit{\addperiod\space}\printfield{year}%
@@ -31,10 +34,14 @@
 \newbibmacro*{cueb:note}{%
  \ifboolexpr{test {\ifentrytype{article}} or test {\ifentrytype{book}} or test {\ifentrytype{online}} or test {\ifentrytype{inproceedings}}}
   {\usebibmacro{cueb:simple-note}}
-  {\usedriver{}{\thefield{entrytype}}}}
+  {\usedriver{\iffieldundef{postnote}{}{\clearfield{pages}\clearfield{pagetotal}}}{\thefield{entrytype}}}}
 \DeclareCiteCommand{\cuebcite}[\mkbibfootnote]
  {\usebibmacro{prenote}}
  {\usebibmacro{citeindex}\usebibmacro{cueb:note}}
  {\addsemicolon\space}
  {\iffieldundef{postnote}{}{\setunit{\addcolon\space}\printfield{postnote}}\addperiod}
+% Each key can have its own locator while sharing one complete footnote.
+\DeclareMultiCiteCommand{\cuebcites}[\mkbibfootnote]{\cuebcite}{\addsemicolon\space}
+\DeclareMultiCiteCommand{\footcites}[\mkbibfootnote]{\cuebcite}{\addsemicolon\space}
+\DeclareMultiCiteCommand{\cites}[\mkbibfootnote]{\cuebcite}{\addsemicolon\space}
 \endinput

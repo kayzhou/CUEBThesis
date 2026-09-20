@@ -1,0 +1,21 @@
+\documentclass{cuebthesis}
+\cuebsetup{title={引注边界验收},author={测试作者},student-id={0},major={测试专业},supervisor={测试导师},thesis-type=review}
+\addbibresource{testfiles/citation-edges.bib}
+\begin{document}
+\cuebfrontmatter
+\noindent\cuebvalue{department}
+\section{完整引注}
+Volume\cuebcite{volume}. No location\cuebcite{noauthor}.
+Thesis\cuebcite[23--24]{thesis}. Report\cuebcite[30]{report}.
+Multiple\cuebcites[11]{volume}[12]{proc}.
+Repeated\footcites[13]{volume}[14]{proc}.
+Alias\cites[15]{volume}[16]{proc}.
+\clearpage
+\setcounter{footnote}{98}
+Ordinary\footnote{Alpha ordinary footnote.}. Cited\cite{volume}.
+Ordinary\footnote{Beta ordinary footnote.}.
+\nocite{*}
+\typeout{CUEB-REFERENCE-COUNT=\arabic{cuebreferencecount}}
+\typeout{CUEB-FOREIGN-COUNT=\arabic{cuebforeigncount}}
+\cuebprintbibliography
+\end{document}

@@ -13,7 +13,7 @@ BUILD = ROOT / 'build' / 'checks'
 
 
 def run(args, expected_success=True):
-    result = subprocess.run(args, cwd=ROOT, text=True, stdout=subprocess.PIPE,
+    result = subprocess.run(args, cwd=ROOT, text=True, encoding='utf-8', stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT)
     if expected_success and result.returncode:
         raise AssertionError(f"Command failed: {' '.join(map(str, args))}\n{result.stdout[-6000:]}")
@@ -86,6 +86,35 @@ def main():
     assert '[8]周志华' in compact and compact.rfind('BISHOP') > compact.index('[8]周志华'), 'Multiple citation keys lost'
     assert '23–25' in pages[0] or '23-25' in pages[0], 'Citation locator lost'
     print('PASS continuous figures/equations, repeated footnotes, on-page notes, bibliography sorting and online date')
+
+    edge_source = (ROOT / 'testfiles/citation-edges.tex').read_text(encoding='utf-8')
+    edge_folder, edge_log = compile_case('citation-edges', edge_source)
+    edge_pages = pdf_text(edge_folder/'citation-edges.pdf').split('\f')
+    edge_text = re.sub(r'\s+', '', edge_pages[0])
+    assert 'JournalofVolume,2020,27:1-20' in edge_text or 'JournalofVolume,2020,27:1–20' in edge_text, edge_text
+    assert '1-200:23' not in edge_text and '1-100:30' not in edge_text, edge_text
+    assert '2020:23–24' in edge_text or '2020:23-24' in edge_text, edge_text
+    assert 'AnonymousManual.Press,2018' in edge_text, edge_text
+    assert edge_text.count('AVolume-onlyArticle') == 4, edge_text
+    for locator in [11, 12, 13, 14, 15, 16]:
+        assert f':{locator}.' in edge_text, (locator, edge_text)
+    assert '[100] SMITH' in edge_pages[1] and '[101] Beta' in edge_pages[1], edge_pages[1]
+    assert '人工智能学院' in edge_text
+    assert 'CUEB-REFERENCE-COUNT=13' in edge_log and 'CUEB-FOREIGN-COUNT=10' in edge_log
+    bibliography_text = re.sub(r'\s+', '', ''.join(edge_pages[2:]))
+    for marker in ['[M]', '[J]', '[D]', '[R]', '[EB/OL]']:
+        assert marker in bibliography_text, (marker, bibliography_text)
+    assert '[english' not in bibliography_text and '[chinese' not in bibliography_text
+    # Locators in notes must not mutate full page ranges in the bibliography.
+    assert '1-200' in edge_pages[-2] or '1–200' in edge_pages[-2]
+    chinese_source = edge_source[:edge_source.index(r'\begin{document}')] + r"""
+\begin{document}\cuebfrontmatter
+\cuebcite{chineseenglishtitle}\cuebprintbibliography
+\end{document}
+"""
+    _, chinese_log = compile_case('chinese-only', chinese_source)
+    assert 'requires foreign-language references' in chinese_log, chinese_log[-2000:]
+    print('PASS citation volume, fallback locators, multicites, three-digit notes, explicit/inferred language and AI college default')
 
     variant = base.replace(r'\begin{document}', r'\cuebsetup{numbering=section}' + '\n' + r'\begin{document}')
     folder, _ = compile_case('section', variant)

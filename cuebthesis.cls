@@ -1,8 +1,8 @@
-%% CUEB undergraduate thesis template, version 0.1.0 (2026-09-20)
+%% CUEB undergraduate thesis template, version 0.1.1 (2026-09-20)
 %% Copyright (C) 2026 CUEB undergraduate thesis template contributors.
 %% Distributed under LPPL 1.3c or later; see LICENSE.
 \NeedsTeXFormat{LaTeX2e}[2020/10/01]
-\ProvidesClass{cuebthesis}[2026/09/20 v0.1.0 CUEB undergraduate thesis]
+\ProvidesClass{cuebthesis}[2026/09/20 v0.1.1 CUEB undergraduate thesis]
 \RequirePackage{iftex}
 \RequireXeTeX
 \LoadClass[UTF8,a4paper,zihao=-4,scheme=plain,fontset=none,oneside]{ctexart}
@@ -11,7 +11,7 @@
 \RequirePackage[backend=biber,bibstyle=cueb-bibliography,citestyle=cueb-footnote,
  sorting=cueb,sortcites=false,autolang=none]{biblatex}
 \RequirePackage[hidelinks,unicode]{hyperref}
-\hypersetup{bookmarksnumbered=true,pdfcreator={CUEB undergraduate thesis v0.1.0}}
+\hypersetup{bookmarksnumbered=true,pdfcreator={CUEB undergraduate thesis v0.1.1}}
 \urlstyle{same}
 \ExplSyntaxOn
 \tl_new:N \g_cueb_user_options_tl
@@ -20,7 +20,7 @@
  {\tl_new:c {g_cueb_#1_tl}}
 \bool_new:N \g_cueb_finalized_bool
 \tl_gset:Nn \g_cueb_standard_tl {cueb-2024}
-\tl_gset:Nn \g_cueb_college_tl {general}
+\tl_gset:Nn \g_cueb_college_tl {artificial-intelligence}
 \tl_gset:Nn \g_cueb_font_tl {preview}
 \tl_gset:Nn \g_cueb_numbering_tl {continuous}
 \tl_gset:Nn \g_cueb_type_tl {research}
@@ -184,7 +184,12 @@
 \renewcommand\listtablename{表格目录}
 \renewcommand\thefootnote{\arabic{footnote}}
 \renewcommand\@makefnmark{\hbox{\textsuperscript{\normalfont[\@thefnmark]}}}
-\renewcommand\@makefntext[1]{\parindent=2em\noindent\hb@xt@2em{\normalfont[\@thefnmark]\hfil}#1}
+\renewcommand\@makefntext[1]{%
+ \parindent=2em\noindent
+ % Leave a visible gap even when the global note counter exceeds 99.
+ \settowidth\@tempdima{\normalfont[\@thefnmark]\enspace}%
+ \ifdim\@tempdima<2em\@tempdima=2em\fi
+ \hb@xt@\@tempdima{\normalfont[\@thefnmark]\hfil}#1}
 \renewcommand\footnotesize{\songti\fontsize{9bp}{12bp}\selectfont}
 \AtBeginDocument{\cuebbodyfont\let\cite\cuebcite\let\footcite\cuebcite}
 \endinput

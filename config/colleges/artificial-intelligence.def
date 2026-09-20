@@ -1,0 +1,5 @@
+% 当前面向首都经济贸易大学人工智能学院；定位依据为项目使用者要求。
+% 尚无独立学院版式文件，因此只设置学院名称，沿用 cueb-2024 校级规则。
+\ProvidesFile{artificial-intelligence.def}[2026/09/20 Artificial Intelligence College defaults]
+\cuebprofilesetup{department={人工智能学院}}
+\endinput
