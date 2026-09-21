@@ -116,7 +116,7 @@
 \AtEndPreamble{\cueb_finalize:}
 \NewDocumentCommand\cuebvalue{m}{\tl_use:c{g_cueb_#1_tl}}
 \NewDocumentCommand\cuebheaderlogo{}{
- \raisebox{0pt}[0.9cm][0pt]{\includegraphics[width=4.5cm,height=0.9cm]{\tl_use:N\g_cueb_logo_tl}}}
+ \raisebox{0pt}[1.11cm][0pt]{\includegraphics[width=4.5cm,height=1.11cm,keepaspectratio]{\tl_use:N\g_cueb_logo_tl}}}
 \RenewDocumentCommand\maketitle{}{
  \hypersetup{pageanchor=false}
  \tl_if_blank:VF\g_cueb_cover_tl{\includepdf[pages=-,pagecommand={\thispagestyle{empty}}]{\tl_use:N\g_cueb_cover_tl}}
@@ -130,7 +130,7 @@
  \vfill
  {\songti\bfseries\fontsize{16bp}{28bp}\selectfont
  \renewcommand\arraystretch{1.4}
- \begin{tabular}{r p{8cm}}
+ \begin{tabular}{r p{5cm}}
  学生姓名：&\tl_use:N\g_cueb_author_tl\\
  学\quad 号：&\tl_use:N\g_cueb_student_id_tl\\
  学\quad 院：&\tl_use:N\g_cueb_department_tl\\
@@ -166,16 +166,16 @@
 \newcommand\cuebheadingfont{\heiti\fontsize{15bp}{22.5bp}\selectfont}
 \newcommand\cuebfrontmatter{\clearpage\hypersetup{pageanchor=true}\pagenumbering{arabic}\pagestyle{cueb}\cuebbodyfont}
 \newcommand\cuebmainmatter{\clearpage\pagestyle{cueb}\cuebbodyfont}
-\newcommand\cuebunnumbered[1]{\clearpage\section*{#1}\addcontentsline{toc}{section}{#1}}
+\newcommand\cuebunnumbered[1]{\clearpage\begingroup\ctexset{section/format+=\centering}\section*{#1}\endgroup\addcontentsline{toc}{section}{#1}}
 \newcommand\cuebappendix{\clearpage\appendix\renewcommand\thesection{\arabic{section}}\ctexset{section={name={附件,},number=\arabic{section}}}\cuebappendixnumbering}
 \newcommand\cuebacknowledgements{\cuebunnumbered{致谢}}
-\NewDocumentEnvironment{cuebabstract}{}{\clearpage\section*{摘\quad 要}\cuebbodyfont}{\par\clearpage}
-\NewDocumentEnvironment{cuebabstract*}{}{\clearpage\section*{Abstract}\cuebbodyfont\let\cuebkeywords\cuebkeywordsEn}{\par\clearpage}
+\NewDocumentEnvironment{cuebabstract}{}{\clearpage\ctexset{section/format+=\centering}\section*{摘\quad 要}\cuebbodyfont}{\par\clearpage}
+\NewDocumentEnvironment{cuebabstract*}{}{\clearpage\ctexset{section/format+=\centering}\section*{Abstract}\cuebbodyfont\let\cuebkeywords\cuebkeywordsEn}{\par\clearpage}
 \newcommand\cuebkeywords[1]{\par\vfill\noindent\textbf{关键词：}#1\par}
 \newcommand\cuebkeywordsEn[1]{\par\vfill\noindent\textbf{Keywords: }#1\par}
-\newcommand\cuebprintbibliography{\cuebcheckreferences\clearpage\printbibliography[heading=bibintoc,title={参考文献}]}
+\newcommand\cuebprintbibliography{\cuebcheckreferences\clearpage\begingroup\ctexset{section/format+=\centering}\printbibliography[heading=bibintoc,title={参考文献}]\endgroup}
 \let\cueboriginaltoc\tableofcontents
-\renewcommand\tableofcontents{\clearpage\cueboriginaltoc\clearpage}
+\renewcommand\tableofcontents{\clearpage\begingroup\ctexset{section/format+=\centering}\cueboriginaltoc\endgroup\clearpage}
 \renewcommand\l@section{\@dottedtocline{1}{0em}{2.5em}}
 \renewcommand\contentsname{目\quad 录}
 \renewcommand\figurename{图}

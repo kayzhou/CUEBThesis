@@ -2,8 +2,10 @@
 %% Binding offset, 18bp leading, page-number origin and heading spacing are
 %% documented interpretations: see docs/requirements.md.
 \ProvidesFile{cueb-2024.def}[2026/09/20 CUEB 2024 undergraduate handbook]
-\geometry{a4paper,left=3.8cm,right=2.8cm,top=2.54cm,bottom=2.54cm,
- headheight=0.9cm,headsep=0.14cm,footskip=0.79cm}
+% Preserve the logo aspect ratio and leave 6 mm before the text area.
+% 3.21 - 1.11 - 0.60 = 1.50 cm: keep the header's top position.
+\geometry{a4paper,left=3.8cm,right=2.8cm,top=3.21cm,bottom=2.54cm,
+ headheight=1.11cm,headsep=0.6cm,footskip=0.79cm}
 \linespread{1}
 \setlength\parindent{2em}
 \setlength\parskip{0pt}

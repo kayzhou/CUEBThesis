@@ -12,6 +12,8 @@ latexmk -outdir=build main.tex
 
 本次本地预览编译使用 TeX Live 2022、XeTeX 0.999994、latexmk 4.77 与 Biber 2.18。该旧版本组合下 Fandol 可能产生字体脚本声明提醒；应结合实际页面检查字形，不能把真正的缺字提示一并忽略。其他发行版和线上环境需分别验证。
 
+主示例默认使用 `submission`，需已安装 `SimSun`、`SimHei` 与 `Times New Roman`。暂未安装时，将 `cuebsetup.tex` 中的 `font-profile` 改为 `preview`。最小示例始终使用预览字体。
+
 最小环境检查：
 
 ```sh
@@ -81,7 +83,7 @@ Overleaf：上传整个工程或发布包，设置主文件为 `main.tex`，编�
 
 ## 5. 正式字体与封面
 
-在配置中改为：
+主示例当前配置为：
 
 ```latex
 \cuebsetup{font-profile=submission}

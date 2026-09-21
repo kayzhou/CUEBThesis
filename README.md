@@ -8,7 +8,7 @@ CUEBThesis 面向**首都经济贸易大学人工智能学院**本科毕业论�
 
 学院配置目前只预设学院名称，版式沿用所附校级手册；尚未加入未经确认的学院专属格式。
 
-当前自动生成的是**暂拟打印扉页**，不是已经确认的学校统一封面。默认使用可分发的预览字体。正式使用前需核实当届规范、学院补充要求、封面底稿和字体，并核对[规范映射与未决事项](docs/requirements.md)。不宣称已获学校审定或适用于最新届次。
+当前自动生成的是**暂拟打印扉页**，不是已经确认的学校统一封面。主示例默认使用正式字体，最小示例使用可分发的预览字体。正式使用前需核实当届规范、学院补充要求、封面底稿和字体，并核对[规范映射与未决事项](docs/requirements.md)。不宣称已获学校审定或适用于最新届次。
 
 ## 获取项目
 
@@ -19,13 +19,13 @@ cd CUEBThesis
 
 ## 立即编译
 
-安装含 XeLaTeX、Biber、latexmk、CTeX 与 `biblatex-gb7714-2015` 的 TeX Live / MacTeX。在项目根目录运行：
+安装含 XeLaTeX、Biber、latexmk、CTeX 与 `biblatex-gb7714-2015` 的 TeX Live / MacTeX。主示例还需要系统已安装 `SimSun`、`SimHei` 和 `Times New Roman`；缺少这些字体时，可先将 `cuebsetup.tex` 中的 `font-profile` 改为 `preview`。在项目根目录运行：
 
 ```sh
 latexmk -outdir=build main.tex
 ```
 
-输出为 `build/main.pdf`。已有 `latexmkrc` 负责选择 XeLaTeX，并由 latexmk 自动调用 Biber、重复编译。默认 `font-profile=preview` 使用 Fandol 与 TeX Gyre，不要求安装宋体。
+输出为 `build/main.pdf`。已有 `latexmkrc` 负责选择 XeLaTeX，并由 latexmk 自动调用 Biber、重复编译。主示例配置为 `font-profile=submission`；`preview` 使用 Fandol 与 TeX Gyre，不要求安装宋体。GitHub Actions 显式使用预览字体编译主示例，其生成的示例 PDF 也是预览字体版。
 
 也可以使用：
 

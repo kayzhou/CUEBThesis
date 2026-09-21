@@ -39,7 +39,15 @@ jobs:
           $binary.DirectoryName | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Compile examples
         run: |
-          latexmk -outdir=build main.tex
+          # CI has distributable preview fonts, not the submission font set.
+          mkdir -p build
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('main.tex').read_text(encoding='utf-8')
+          source = source.replace(r'\input{cuebsetup}', r'\input{cuebsetup}' + '\n' + r'\cuebsetup{font-profile=preview}')
+          Path('build/ci-main.tex').write_text(source, encoding='utf-8')
+          PY
+          latexmk -jobname=main -outdir=build build/ci-main.tex
           latexmk -outdir=build/minimal examples/minimal.tex
       - name: Verify behavior and output
         run: |
