@@ -99,7 +99,7 @@
 
 ### B. 使用本地 AI 工具协助编译
 
-如果你不熟悉命令行，推荐使用 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)，也可以使用 Codex、Cursor、Windsurf 或其他能够读取本地文件并运行终端命令的 AI 工具。先用编辑器打开解压后的整个 `CUEBThesis-main` 文件夹，再把下面这段话发给 AI：
+如果你不熟悉命令行，推荐使用 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)，也可以使用 Codex、Cursor、WorkBuddy 或其他能够读取本地文件并运行终端命令的 AI 工具。先用编辑器打开解压后的整个 `CUEBThesis-main` 文件夹，再把下面这段话发给 AI：
 
 ```text
 这是一个 LaTeX 毕业论文模板。请在当前项目根目录检查编译环境，使用 XeLaTeX 和 latexmk 编译 main.tex，必要时运行 Biber；如果缺少字体，先把 cuebsetup.tex 的 font-profile 改为 preview。请不要删除或重写模板文件，编译完成后告诉我 PDF 的位置和第一条真正的报错。
