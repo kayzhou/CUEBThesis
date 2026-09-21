@@ -1,5 +1,7 @@
 # 快速入门
 
+第一次接触 LaTeX，请先阅读 [README 零基础使用指南](../README.md)。本文保留更详细的命令、引文和学院配置说明，适合已经完成第一次编译后查阅。
+
 ## 1. 获取并编译
 
 将项目解压到一个可写目录，打开终端并进入含 `main.tex` 的根目录。安装完整的 TeX Live / MacTeX，确认可以执行 `xelatex`、`biber` 和 `latexmk`。模板依赖 `ctex`、`fontspec`、`geometry`、`fancyhdr`、`biblatex`、`biblatex-gb7714-2015` 等公开宏包；项目内已经提供自己的文档类和文献样式。
@@ -122,4 +124,4 @@ Overleaf：上传整个工程或发布包，设置主文件为 `main.tex`，编�
 
 维护者可在 `config/colleges/` 新建一个有明确规范依据的 `.def` 文件，使用 `\cuebprofilesetup{...}` 设置差异，然后用 `college-profile` 选择其不带扩展名的文件名。加载顺序为学校配置、学院配置、用户显式配置。例如学院配置选择按节编号时，用户配置中的 `numbering=continuous` 仍会覆盖它；希望采用学院默认值时应删除这项显式设置。不要仅因学院名称不同就复制整套文档类。
 
-`make test` 额外需要 Python 3 与 Poppler 的 `pdftotext`；普通论文编译不需要 Python 或 Poppler。GitHub Actions 已配置三平台检查，但本版交付只实际验证了当前 macOS 环境，远程 CI 和 Overleaf 尚未运行。
+`make test` 额外需要 Python 3 与 Poppler 的 `pdftotext`；普通论文编译不需要 Python 或 Poppler。本地 macOS 验证记录见 [validation.md](validation.md)。GitHub Actions 已运行三平台检查，目前仍有未通过项目，最新结果见 [Actions](https://github.com/kayzhou/CUEBThesis/actions)；Overleaf 尚未完成实测。
