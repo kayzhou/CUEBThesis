@@ -1,4 +1,4 @@
-# School of AI · CUEBThesis
+# CUEBThesis
 
 首都经济贸易大学人工智能学院本科毕业论文（设计）LaTeX 模板。
 
@@ -13,8 +13,8 @@
 ## 获取项目
 
 ```sh
-git clone https://github.com/kayzhou/cuebthesis.git
-cd cuebthesis
+git clone https://github.com/kayzhou/CUEBThesis.git
+cd CUEBThesis
 ```
 
 ## 立即编译
