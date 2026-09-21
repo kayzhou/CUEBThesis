@@ -63,7 +63,7 @@
 
 **你写的是 `.tex`，交给老师看的通常是 `.pdf`。** 不要直接在生成的 PDF 上改正文，否则下次编译时这些改动不会保留。
 
-下面两条路线任选一条即可：
+下面两条路线任选一条即可。对完全没有 LaTeX 经验的同学，优先推荐使用能读取项目文件并运行终端命令的 AI 工具来完成第一次编译。
 
 | 方式 | 适合谁 | 需要准备什么 |
 | --- | --- | --- |
@@ -97,65 +97,24 @@
 
 如果在线编译超时，可先把主文档暂时设为 `examples/minimal.tex`，检查三页最小示例是否能生成；它不包含完整论文结构，正式写作仍应切回 `main.tex`。持续超时可使用下面的本地方式。
 
-### B. 在自己的电脑上使用
+### B. 使用本地 AI 工具协助编译
 
-#### 第一步：安装编译工具
+如果你不熟悉命令行，推荐使用 [Claude Code](https://docs.anthropic.com/en/docs/claude-code)，也可以使用 Codex、Cursor、Windsurf 或其他能够读取本地文件并运行终端命令的 AI 工具。先用编辑器打开解压后的整个 `CUEBThesis-main` 文件夹，再把下面这段话发给 AI：
 
-| 系统 | 建议安装 | 说明 |
-| --- | --- | --- |
-| Windows | [TeX Live](https://tug.org/texlive/acquire-netinstall.html) | 新手建议选择完整安装，下载体积较大，安装时保持网络连接 |
-| macOS | [MacTeX](https://tug.org/mactex/) | 建议使用完整版；安装后重新打开编辑器和终端 |
-| Linux | [TeX Live](https://tug.org/texlive/) 或发行版的完整 TeX Live 软件包 | 应包含中文排版、XeLaTeX、Biber 和 latexmk |
-
-这些工具是生成 PDF 所需的“排版引擎”。**只安装 VS Code，并不能编译论文。**
-
-模板依赖 XeLaTeX、latexmk、Biber、CTeX、`biblatex` 和 `biblatex-gb7714-2015`。使用完整发行版可以减少逐个补装宏包的问题；这里的“宏包”可以理解为排版工具的功能组件。
-
-#### 第二步：用编辑器打开整个文件夹
-
-可以安装 [Visual Studio Code](https://code.visualstudio.com/)，通过 **文件 → 打开文件夹**，打开刚解压的 `CUEBThesis-main`。
-
-- 用 VS Code 编辑 `.tex`、`.bib` 文件，不要用 Word 编辑它们。
-- 首次使用，先在 `cuebsetup.tex` 中将 `font-profile` 改为 `preview`。
-- 保存文件，Windows 按 `Ctrl + S`，macOS 按 `Command + S`。
-
-#### 第三步：执行编译命令
-
-在 VS Code 中选择 **终端 → 新建终端**，确认终端所在文件夹中能找到 `main.tex`，然后粘贴下面这一行，按回车：
-
-```sh
-latexmk -outdir=build main.tex
+```text
+这是一个 LaTeX 毕业论文模板。请在当前项目根目录检查编译环境，使用 XeLaTeX 和 latexmk 编译 main.tex，必要时运行 Biber；如果缺少字体，先把 cuebsetup.tex 的 font-profile 改为 preview。请不要删除或重写模板文件，编译完成后告诉我 PDF 的位置和第一条真正的报错。
 ```
 
-这条命令会自动调用 XeLaTeX 和 Biber，并根据需要重复编译。**不用自己记住先运行哪一个、要运行几遍。**
+AI 工具会根据你的操作系统检查 TeX Live / MacTeX、XeLaTeX、Biber 和 latexmk 是否可用，并执行项目需要的编译步骤。编译成功后，打开 **`build/main.pdf`**。你每次修改正文后，都可以让 AI 再次编译并检查日志。
 
-如果你从系统终端打开，需要先进入项目文件夹。下面的路径是示例，请换成你自己解压的位置：
+使用 AI 时请注意：
 
-Windows PowerShell：
+- 让它在**包含 `main.tex` 的项目根目录**工作，不要单独编译 `data` 文件夹里的章节。
+- 第一次使用建议将 `font-profile` 设为 `preview`；正式提交时再在已安装指定字体的环境中切换为 `submission`。
+- 把 AI 的修改限制在你的正文、配置、图片和文献文件；不要让它随意改写 `cuebthesis.cls`、`config/` 或文献样式文件。
+- AI 报告“编译成功”后，仍要亲自打开 PDF，检查封面、目录、引用、图表和页码。
 
-```powershell
-cd "D:\Thesis\CUEBThesis-main"
-latexmk -outdir=build main.tex
-```
-
-macOS / Linux：
-
-```sh
-cd "$HOME/Documents/CUEBThesis-main"
-latexmk -outdir=build main.tex
-```
-
-命令执行完成后，打开项目中的 **`build/main.pdf`**。这就是生成的论文。
-
-> 请始终在包含 `main.tex` 的项目文件夹中执行命令，不要进入 `data` 文件夹去编译某一节。`build` 是自动生成的输出文件夹，第一次编译之前没有它是正常的。
-
-如果主示例编译失败，可以先运行较小的环境检查示例：
-
-```sh
-latexmk -outdir=build/minimal examples/minimal.tex
-```
-
-成功后会得到 `build/minimal/minimal.pdf`。如果连它也无法生成，先查看[常见问题](#troubleshooting)，解决编译环境后再开始写正文。
+如果你想自己安装和运行 LaTeX，项目依赖 XeLaTeX、latexmk、Biber、CTeX、`biblatex` 和 `biblatex-gb7714-2015`。完整安装 TeX Live（Windows/Linux）或 MacTeX（macOS）通常最省事；详细命令只放在文末的维护者命令和[常见问题](#troubleshooting)中。
 
 <a id="metadata"></a>
 ## 3. 填上自己的信息
@@ -433,7 +392,7 @@ Write your English abstract here.
 建议按这个顺序：
 
 1. 修改少量文字，保存源文件。
-2. 在线点击 Recompile；本地执行 `latexmk -outdir=build main.tex`。
+2. 在线点击 Recompile；本地让 AI 工具重新编译项目。
 3. 检查刚修改的页面，以及目录、图表编号和引用是否正常。
 4. 每完成一段重要工作，备份一次整个项目文件夹，或使用 Git 保存版本。
 
