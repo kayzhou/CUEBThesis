@@ -12,7 +12,7 @@ latexmk -outdir=build main.tex
 
 打开 `build/main.pdf`。首次编译需要运行 Biber 并重复处理目录与交叉引用，交给 latexmk 即可。不要在 `data/` 或 `examples/` 内直接运行命令。
 
-本次本地预览编译使用 TeX Live 2022、XeTeX 0.999994、latexmk 4.77 与 Biber 2.18。该旧版本组合下 Fandol 可能产生字体脚本声明提醒；应结合实际页面检查字形，不能把真正的缺字提示一并忽略。其他发行版和线上环境需分别验证。
+最新本地编译验证使用 TeX Live 2026、XeTeX 0.999998、latexmk 4.88 与 Biber 2.22；两份示例及PDF/日志检查通过。完整测试的文献边界用例仍存在 `\printenddate` 未定义问题，详见[验证记录](validation.md)。较早的 TeX Live 2022 环境记录也保留在该文档中；不同环境的结果需分别判断。
 
 主示例默认使用 `submission`，需已安装 `SimSun`、`SimHei` 与 `Times New Roman`。暂未安装时，将 `cuebsetup.tex` 中的 `font-profile` 改为 `preview`。最小示例始终使用预览字体。
 

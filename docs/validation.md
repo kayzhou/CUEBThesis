@@ -1,3 +1,29 @@
+# 2026-09-22 TeX Live 2026 编译验证
+
+验证源码：提交 `0ea4d5c`。环境为 macOS arm64、XeTeX 0.999998（TeX Live 2026）、Biber 2.22、latexmk 4.88。明确使用同一 TeX Live 2026 安装中的工具，在独立输出目录重新编译。
+
+| 检查 | 结果 |
+| --- | --- |
+| 主示例 `main.tex` | 编译成功，12页A4；使用正式字体 |
+| 最小示例 `examples/minimal.tex` | 编译成功，3页A4；使用预览字体 |
+| 两份PDF与最终日志 | 检查通过，无缺字、溢出或未解析引用 |
+| 主示例嵌入字体 | 确认嵌入 SimSun、SimHei 和 Times New Roman |
+
+复现命令（先确保终端使用 TeX Live 2026）：
+
+```sh
+latexmk -outdir=build/texlive2026 main.tex
+latexmk -outdir=build/texlive2026/minimal examples/minimal.tex
+python3 utils/check.py --pdf build/texlive2026/main.pdf
+python3 utils/check.py --pdf build/texlive2026/minimal/minimal.pdf
+```
+
+此前在同版本源码的干净副本中执行完整测试：两项Python单元测试和基础编号、脚注、排序验收通过，但 `citation-edges` 在生成文末参考文献时遇到 `\printenddate` 未定义，复现了GitHub的新版环境报错。本次两份示例未触发该问题；没有修复此兼容问题，也不能将示例编译成功描述为TeX Live 2026下全部测试通过。
+
+最终主示例日志仍有字体族重新定义、示例文献数量不足、网络来源缺发布日期等提醒。以下保留较早版本的验证记录，需按日期及环境区分。
+
+---
+
 # 2026-09-21 版式修订验证
 
 主示例使用 SimSun、SimHei、Times New Roman 正式字体，最小示例使用预览字体。环境为 macOS arm64、TeX Live 2022、Biber 2.18、latexmk 4.77、Python 3.14.6 与 Poppler。

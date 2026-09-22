@@ -486,7 +486,7 @@ latexmk -outdir=build main.tex
 
 模板基于 CTeX、XeLaTeX、biblatex 和 Biber 实现。默认学院配置只预设“人工智能学院”名称，没有加入未经确认的学院专属规定。当前标题、页眉留白、校徽比例等实现与手册原始尺寸之间的差异，已记录在规范映射中。
 
-目前已在本地 macOS 上完成示例编译、正式字体检查和页面核对。跨平台自动检查目前仍有未通过项目，具体问题和最新状态见 [GitHub Actions](https://github.com/kayzhou/CUEBThesis/actions)。CI 使用预览字体，不能替代正式字体下的逐页核对。
+已在本地 macOS 的 TeX Live 2026 环境中重新编译完整示例（12页）和最小示例（3页），PDF与日志检查通过，主示例正式字体已嵌入。完整测试中的文献边界用例仍会出现 `\printenddate` 未定义，尚未修复；示例编译成功不代表全部兼容性测试通过。详情见[验证记录](docs/validation.md)及 [GitHub Actions](https://github.com/kayzhou/CUEBThesis/actions)。CI 使用预览字体，不能替代正式字体下的逐页核对。
 
 - [进阶使用与配置](docs/quickstart.md)：多文献脚注、学院配置、正式字体等。
 - [规范映射与待确认事项](docs/requirements.md)：每项版式的来源与当前解释。
