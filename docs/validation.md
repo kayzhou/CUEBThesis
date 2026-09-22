@@ -1,3 +1,17 @@
+# 2026-09-22 CI 兼容修复与完整验证
+
+环境：macOS arm64、TeX Live 2026、XeTeX 0.999998、Biber 2.22、latexmk 4.88。
+
+- 修复上游文献样式处理日期范围时调用未定义 `\printenddate` 的问题。文末网络文献使用范围结束日期作为更新日期，单独填写的 `eventdate` 优先；沿用 GB 样式日期格式及补零规则。
+- 新增实际 PDF 文本回归检查：完整发布日期、日期范围、单独指定的更新日期、开放结束日期、缺发布日期、仅年份。检查具体输出，确保没有通过删除日期来绕过报错。
+- GitHub 的 Windows 日志显示实际调用的是 Xpdf 4.06，不支持检查脚本所需的 `-bbox`。CI 现在通过 `CUEB_PDFTOTEXT` 指定已安装 Poppler 的绝对路径，避免同名工具冲突；未指定时仍使用 PATH 中的 `pdftotext`。
+
+本地执行 `make release` 全部通过：两项 Python 单元测试、全部 LaTeX 验收（含新增日期检查）、两份示例 PDF/日志检查以及 ZIP 打包。主示例使用正式字体，最小示例使用预览字体。跨平台运行记录见 [GitHub Actions](https://github.com/kayzhou/CUEBThesis/actions)；本地通过与远程结果分别记录，Overleaf 尚未实测。
+
+以下为修复前的历史记录，其中“尚未修复”的描述仅对应当时的提交。
+
+---
+
 # 2026-09-22 TeX Live 2026 编译验证
 
 验证源码：提交 `0ea4d5c`。环境为 macOS arm64、XeTeX 0.999998（TeX Live 2026）、Biber 2.22、latexmk 4.88。明确使用同一 TeX Live 2026 安装中的工具，在独立输出目录重新编译。

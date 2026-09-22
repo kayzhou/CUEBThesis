@@ -8,6 +8,17 @@
  }
 }
 \RequireBibliographyStyle{gb7714-2005}
+% Upstream modifydate calls an undefined \printenddate for date ranges.
+% Keep its event/end/start priority, using the same GB date formatter for
+% the endyear/endmonth/endday fields (not the range's publication date).
+\renewbibmacro*{modifydate}{%
+ \iffieldundef{eventday}{%
+  \iffieldundef{endday}{%
+   \iffieldundef{day}{}{\iffieldequalstr{day}{}{}{%
+    \printtext{\gbleftparen}\blx@gbdate{}{}\printtext{\gbrightparen}}}%
+  }{\printtext{\gbleftparen}\blx@gbdate{end}{}\printtext{\gbrightparen}}%
+ }{\printtext{\gbleftparen}\printeventdate\printtext{\gbrightparen}}%
+}
 \ExecuteBibliographyOptions{doi=false,url=true,isbn=false,gbpub=false,gbalign=left}
 \DeclareSortingTemplate{cueb}{
  \sort{\field{presort}}

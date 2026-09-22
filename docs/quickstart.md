@@ -12,7 +12,7 @@ latexmk -outdir=build main.tex
 
 打开 `build/main.pdf`。首次编译需要运行 Biber 并重复处理目录与交叉引用，交给 latexmk 即可。不要在 `data/` 或 `examples/` 内直接运行命令。
 
-最新本地编译验证使用 TeX Live 2026、XeTeX 0.999998、latexmk 4.88 与 Biber 2.22；两份示例及PDF/日志检查通过。完整测试的文献边界用例仍存在 `\printenddate` 未定义问题，详见[验证记录](validation.md)。较早的 TeX Live 2022 环境记录也保留在该文档中；不同环境的结果需分别判断。
+最新本地编译验证使用 TeX Live 2026、XeTeX 0.999998、latexmk 4.88 与 Biber 2.22；两份示例、完整验收、PDF/日志检查和发布打包均通过，日期范围文献的 `\printenddate` 报错已修复，详见[验证记录](validation.md)。较早的 TeX Live 2022 环境记录也保留在该文档中；不同环境的结果需分别判断。
 
 主示例默认使用 `submission`，需已安装 `SimSun`、`SimHei` 与 `Times New Roman`。暂未安装时，将 `cuebsetup.tex` 中的 `font-profile` 改为 `preview`。最小示例始终使用预览字体。
 
@@ -124,4 +124,4 @@ Overleaf：上传整个工程或发布包，设置主文件为 `main.tex`，编�
 
 维护者可在 `config/colleges/` 新建一个有明确规范依据的 `.def` 文件，使用 `\cuebprofilesetup{...}` 设置差异，然后用 `college-profile` 选择其不带扩展名的文件名。加载顺序为学校配置、学院配置、用户显式配置。例如学院配置选择按节编号时，用户配置中的 `numbering=continuous` 仍会覆盖它；希望采用学院默认值时应删除这项显式设置。不要仅因学院名称不同就复制整套文档类。
 
-`make test` 额外需要 Python 3 与 Poppler 的 `pdftotext`；普通论文编译不需要 Python 或 Poppler。本地 macOS 验证记录见 [validation.md](validation.md)。GitHub Actions 已运行三平台检查，目前仍有未通过项目，最新结果见 [Actions](https://github.com/kayzhou/CUEBThesis/actions)；Overleaf 尚未完成实测。
+`make test` 额外需要 Python 3 与 Poppler 的 `pdftotext`；普通论文编译不需要 Python 或 Poppler。本地 macOS 验证记录见 [validation.md](validation.md)。GitHub Actions 自动运行 Linux、macOS、Windows 三平台检查，最新结果见 [Actions](https://github.com/kayzhou/CUEBThesis/actions)；Overleaf 尚未完成实测。

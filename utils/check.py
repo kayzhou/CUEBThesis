@@ -2,6 +2,7 @@
 """Compile real fixtures and verify CUEB output behavior (Python standard library)."""
 from pathlib import Path
 import argparse
+import os
 import re
 import shutil
 import subprocess
@@ -10,6 +11,8 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'build' / 'checks'
+# CI pins Poppler explicitly: TeX Live also ships an incompatible Xpdf binary.
+PDFTOTEXT = os.environ.get('CUEB_PDFTOTEXT', 'pdftotext')
 
 
 def run(args, expected_success=True):
@@ -44,14 +47,14 @@ def labels(folder, name):
 
 
 def pdf_text(path):
-    return run(['pdftotext', '-layout', str(path), '-']).stdout
+    return run([PDFTOTEXT, '-layout', str(path), '-']).stdout
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--pdf', type=Path, help='Only validate an already built PDF and its log')
     args = parser.parse_args()
-    for tool in (['pdftotext'] if args.pdf else ['latexmk', 'xelatex', 'biber', 'pdftotext']):
+    for tool in ([PDFTOTEXT] if args.pdf else ['latexmk', 'xelatex', 'biber', PDFTOTEXT]):
         if not shutil.which(tool):
             parser.error(f'Required command is not on PATH: {tool}')
     if args.pdf:
@@ -72,7 +75,7 @@ def main():
     assert 'CUEB-FOOTNOTES=8' in log, 'Footnotes must continue across sections and share the ordinary note counter'
     entries = re.findall(r'\\entry\{([^}]+)\}', (folder/'continuous.bbl').read_text(encoding='utf-8'))
     assert entries == ['li', 'wang', 'zhou', 'bishop', 'web'], entries
-    bbox = ET.fromstring(run(['pdftotext', '-bbox', str(folder/'continuous.pdf'), '-']).stdout)
+    bbox = ET.fromstring(run([PDFTOTEXT, '-bbox', str(folder/'continuous.pdf'), '-']).stdout)
     words = list(bbox.iter('{http://www.w3.org/1999/xhtml}word'))
     first_para = next(w for w in words if (w.text or '').startswith('首次引用中文文献'))
     assert abs(float(first_para.attrib['xMin']) - (3.8 * 72 / 2.54 + 24)) < 0.2, first_para.attrib
@@ -115,6 +118,18 @@ def main():
     _, chinese_log = compile_case('chinese-only', chinese_source)
     assert 'requires foreign-language references' in chinese_log, chinese_log[-2000:]
     print('PASS citation volume, fallback locators, multicites, three-digit notes, explicit/inferred language and AI college default')
+
+    date_source = (ROOT / 'testfiles/online-dates.tex').read_text(encoding='utf-8')
+    date_folder, _ = compile_case('online-dates', date_source)
+    date_text = re.sub(r'\s+', '', pdf_text(date_folder/'online-dates.pdf'))
+    # Check rendered dates, including leading zeros and update-date priority.
+    for title, date in [('SingleDate', '(2020-03-01)'),
+                        ('RangeDate', '(2021-04-02)'),
+                        ('EventDate', '(2022-05-03)'),
+                        ('OpenDate', '(2020-03-01)'),
+                        ('Undated', ''), ('YearOnly', '2020')]:
+        assert f'{title}[EB/OL].{date}[2026-09-20]' in date_text, (title, date_text)
+    print('PASS online publication/update dates, ranges, event priority and missing/partial dates')
 
     variant = base.replace(r'\begin{document}', r'\cuebsetup{numbering=section}' + '\n' + r'\begin{document}')
     folder, _ = compile_case('section', variant)
